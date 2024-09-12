@@ -1,3 +1,5 @@
+import heraclius.common.Symbols
+
 fun main() {
     println(Symbols.of<Number>("123"))
     println(Symbols.get<Number>("123"))

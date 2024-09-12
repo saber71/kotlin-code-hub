@@ -1,3 +1,5 @@
+package heraclius.common
+
 import java.util.WeakHashMap
 
 // 字典键值对

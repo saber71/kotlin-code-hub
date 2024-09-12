@@ -1,6 +1,8 @@
-package decorators
+package heraclius.behavior_tree.decorators
 
-import Function
+import heraclius.behavior_tree.Behavior
+import heraclius.behavior_tree.Status
+import heraclius.common.Function
 
 // 错误时返回指定状态
 class FailureIs(val targetStatus: Status, fn: Function<Unit>? = null) : Behavior.Decorator(fn) {

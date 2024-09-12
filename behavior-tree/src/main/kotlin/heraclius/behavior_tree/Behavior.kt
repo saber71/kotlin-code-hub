@@ -1,3 +1,7 @@
+package heraclius.behavior_tree
+
+import heraclius.common.Function
+
 /**
  * 行为类，提供基础的行为处理逻辑。
  * 可以被继承以实现不同的行为策略。
@@ -8,7 +12,7 @@ open class Behavior() {
         // 用于维护行为的堆栈，支持行为的嵌套定义
         private val stacks = mutableListOf<Behavior>()
 
-        // 代表无操作的 Behavior 实例，用于默认行为
+        // 代表无操作的 heraclius.behavior_tree.Behavior 实例，用于默认行为
         val NOOP = Behavior()
     }
 

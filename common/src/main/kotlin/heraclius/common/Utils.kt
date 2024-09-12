@@ -1,3 +1,5 @@
+package heraclius.common
+
 object Utils {
     // 缓存获取父类列表的函数
     private val parentClassesCache = mutableMapOf<Class<*>, List<Class<*>>>()

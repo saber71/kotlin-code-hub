@@ -1,3 +1,5 @@
+package heraclius.behavior_tree
+
 // 定义行为树状态
 enum class Status {
     SUCCESS,

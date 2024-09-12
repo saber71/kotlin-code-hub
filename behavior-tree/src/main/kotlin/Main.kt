@@ -1,8 +1,8 @@
-import behaviors.Failure
-import behaviors.Success
-import composites.*
-import decorators.AlwaysFailure
-import decorators.AlwaysSuccess
+import heraclius.behavior_tree.behaviors.Failure
+import heraclius.behavior_tree.behaviors.Success
+import heraclius.behavior_tree.composites.Selector
+import heraclius.behavior_tree.decorators.AlwaysFailure
+import heraclius.behavior_tree.decorators.AlwaysSuccess
 
 fun main() {
     val root = Selector(true) {
