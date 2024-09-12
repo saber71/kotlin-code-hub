@@ -18,6 +18,9 @@
     <modules>
         <module>common</module>
         <module>behavior-tree</module>
+        <module>xml-executor</module>
+        <module>xml-executor-plugin-attributes</module>
+        <module>xml-executor-app</module>
     </modules>
 
     <dependencyManagement>
@@ -30,6 +33,21 @@
             <dependency>
                 <groupId>heraclius</groupId>
                 <artifactId>behavior-tree</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>xml-executor</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>xml-executor-plugin-attributes</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>xml-executor-app</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -50,6 +68,19 @@
                 <artifactId>kotlin-stdlib</artifactId>
                 <version>2.0.10</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.10.2</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
+            <dependency>
+                <groupId>org.dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>2.1.4</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

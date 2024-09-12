@@ -9,7 +9,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>common</artifactId>
+    <artifactId>xml-executor-plugin-attributes</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,6 +26,7 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
@@ -81,8 +82,8 @@
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
+            <groupId>heraclius</groupId>
+            <artifactId>xml-executor</artifactId>
         </dependency>
     </dependencies>
 

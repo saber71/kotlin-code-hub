@@ -9,5 +9,11 @@
     <file url="file://$PROJECT_DIR$/common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xml-executor-app/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xml-executor-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xml-executor-plugin-attributes/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xml-executor-plugin-attributes/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xml-executor/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/xml-executor/src/main/resources" charset="UTF-8" />
   </component>
 </project>

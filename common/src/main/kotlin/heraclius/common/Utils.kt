@@ -1,8 +1,13 @@
 package heraclius.common
 
+import org.reflections.Reflections
+
 object Utils {
     // 缓存获取父类列表的函数
     private val parentClassesCache = mutableMapOf<Class<*>, List<Class<*>>>()
+
+    // 缓存反射操作
+    val reflections = Reflections("heraclius")
 
     /**
      * 获取对象的类信息
