@@ -1,4 +1,0 @@
-package heraclius
-
-fun main() {
-}
