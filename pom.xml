@@ -17,6 +17,7 @@
 
     <modules>
         <module>common</module>
+        <module>behavior-tree</module>
     </modules>
 
     <dependencyManagement>
@@ -24,6 +25,11 @@
             <dependency>
                 <groupId>heraclius</groupId>
                 <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>behavior-tree</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
