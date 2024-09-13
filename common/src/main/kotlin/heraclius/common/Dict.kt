@@ -1,6 +1,6 @@
 package heraclius.common
 
-import java.util.WeakHashMap
+import java.util.*
 
 // 字典键值对
 class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapOf()) {
@@ -40,8 +40,7 @@ class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMap
 
     // 获取键值对，未找到则返回默认值
     fun <V> value(key: Symbols.Symbol<V>, default: V): V {
-        val value = valueOrNull(key)
-        if (value == null) return default
+        val value = valueOrNull(key) ?: return default
         return value
     }
 

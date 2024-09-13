@@ -28,7 +28,7 @@ open class SlotStack<V> : Iterable<V> {
         return _list.lastOrNull()?.value
     }
 
-    fun to_top(item: V) {
+    fun toTop(item: V) {
         val slots = _itemMapSlots[item] ?: return add(item)
         slots.last().placeholder = true
         val slot = Slot(item)
@@ -42,7 +42,7 @@ open class SlotStack<V> : Iterable<V> {
             remove(item)
             return
         }
-        slots.removeLast()
+        _list.remove(slots.removeLast())
         slots.last().placeholder = false
     }
 
