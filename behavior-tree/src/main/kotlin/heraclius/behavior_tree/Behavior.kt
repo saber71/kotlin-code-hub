@@ -10,7 +10,7 @@ open class Behavior() {
     // 伴侣对象，用于存储静态信息和操作
     companion object {
         // 用于维护行为的堆栈，支持行为的嵌套定义
-        private val stacks = mutableListOf<Behavior>()
+        private val _stacks = mutableListOf<Behavior>()
 
         // 代表无操作的 heraclius.behavior_tree.Behavior 实例，用于默认行为
         val NOOP = Behavior()
@@ -18,8 +18,8 @@ open class Behavior() {
 
     // 初始化时自动管理行为堆栈
     init {
-        if (stacks.isNotEmpty()) {
-            val last = stacks.last()
+        if (_stacks.isNotEmpty()) {
+            val last = _stacks.last()
             // 如果栈顶是 Composite 类型，则将当前行为添加为其子行为
             if (last is Composite) {
                 last.children.add(this)
@@ -33,38 +33,38 @@ open class Behavior() {
         }
     }
 
+    // 行为的状态，子类可以根据状态调整行为逻辑
+    protected var _status = Status.INVALID
+
     /**
      * 执行行为，并在执行前后进行处理。
      * 此方法模拟了模板方法设计模式，子类可以重载特定部分的行为。
      */
     fun tick(): Status {
-        beforeRun() // 执行行为之前的处理
-        afterRun(run()) // 执行核心行为逻辑，并在之后进行处理
-        return status
+        _beforeRun() // 执行行为之前的处理
+        _afterRun(_run()) // 执行核心行为逻辑，并在之后进行处理
+        return _status
     }
 
-    // 行为的状态，子类可以根据状态调整行为逻辑
-    protected var status = Status.INVALID
-
     // 在行为执行之前执行的操作，子类可重载
-    protected open fun beforeRun() {}
+    protected open fun _beforeRun() {}
 
     // 行为的核心逻辑，子类应重载此方法以定义具体行为
-    protected open fun run(): Status {
+    protected open fun _run(): Status {
         return Status.INVALID
     }
 
     // 在行为执行之后执行的操作，子类可重载
-    protected open fun afterRun(newStatus: Status) {
-        status = newStatus
+    protected open fun _afterRun(newStatus: Status) {
+        _status = newStatus
     }
 
-    // 初始化函数，允许外部在行为初始化时执行特定操作
-    protected fun init(fn: Function<Unit>?) {
+    // 执行初始化函数，允许外部在行为初始化时执行特定操作
+    protected fun _execInitFn(fn: Function<Unit>?) {
         if (fn != null) {
-            stacks.add(this)
+            _stacks.add(this)
             fn()
-            stacks.remove(this)
+            _stacks.remove(this)
         }
     }
 
@@ -74,21 +74,21 @@ open class Behavior() {
      */
     open class Composite(fn: Function<Unit>? = null, val memory: Boolean = false) : Behavior() {
         val children = mutableListOf<Behavior>() // 子行为列表
-        protected var index = 0 // 当前子节点索引
+        protected var _index = 0 // 当前子节点索引
 
         init {
-            init(fn)
+            _execInitFn(fn)
         }
 
         // 在行为执行后处理，根据新状态更新子行为的状态
-        override fun afterRun(newStatus: Status) {
-            if ((newStatus != Status.RUNNING || !memory) && status != Status.INVALID) {
+        override fun _afterRun(newStatus: Status) {
+            if ((newStatus != Status.RUNNING || !memory) && _status != Status.INVALID) {
                 for (child in children) {
-                    child.afterRun(Status.INVALID)
+                    child._afterRun(Status.INVALID)
                 }
-                index = 0
+                _index = 0
             }
-            super.afterRun(newStatus)
+            super._afterRun(newStatus)
         }
     }
 
@@ -97,22 +97,22 @@ open class Behavior() {
      * 实现了行为树中的装饰模式。
      */
     open class Decorator(fn: Function<Unit>? = null) : Behavior() {
-        var child = NOOP // 默认子行为
+        var child = NOOP // 子节点
 
         init {
-            init(fn)
+            _execInitFn(fn)
         }
 
-        override fun run(): Status {
+        override fun _run(): Status {
             return child.tick()
         }
 
         // 在行为执行后处理，根据新状态更新子行为的状态
-        override fun afterRun(newStatus: Status) {
+        override fun _afterRun(newStatus: Status) {
             if (newStatus != Status.RUNNING) {
-                child.afterRun(Status.INVALID)
+                child._afterRun(Status.INVALID)
             }
-            super.afterRun(newStatus)
+            super._afterRun(newStatus)
         }
     }
 }

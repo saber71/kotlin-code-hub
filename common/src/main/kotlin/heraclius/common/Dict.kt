@@ -3,38 +3,38 @@ package heraclius.common
 import java.util.WeakHashMap
 
 // 字典键值对
-class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapOf()) {
+class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapOf()) {
     // 父级字典
-    private val parents = mutableSetOf<Dict>()
+    private val _parents = mutableSetOf<Dict>()
 
     // 删除的键值对
-    private val removedKey = WeakHashMap<Symbols.Symbol<*>, Any>()
+    private val _removedKey = WeakHashMap<Symbols.Symbol<*>, Any>()
 
     // 继承父级字典
     fun extend(parent: Dict): Dict {
-        parents.add(parent)
+        _parents.add(parent)
         return this
     }
 
     // 删除键值对
     fun remove(key: Symbols.Symbol<*>): Dict {
-        removedKey.put(key, true)
-        dataMap.remove(key)
+        _removedKey.put(key, true)
+        _dataMap.remove(key)
         return this
     }
 
     // 获取键值对，未找到则返回null
     fun <V> valueOrNull(key: Symbols.Symbol<V>): V? {
-        if (removedKey.containsKey(key)) return null
-        if (!dataMap.containsKey(key)) {
-            for (parent in parents.reversed()) {
+        if (_removedKey.containsKey(key)) return null
+        if (!_dataMap.containsKey(key)) {
+            for (parent in _parents.reversed()) {
                 val value = parent.valueOrNull(key)
                 if (value != null) return value
             }
             return null
         } else {
             @Suppress("UNCHECKED_CAST")
-            return this.dataMap[key] as V
+            return this._dataMap[key] as V
         }
     }
 
@@ -47,21 +47,20 @@ class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapO
 
     // 复制本对象
     fun clone(): Dict {
-        val cls = Dict::class.java
-        val result = cls.constructors[0].newInstance(dataMap.toMap().toMutableMap()) as Dict
-        result.parents.addAll(parents)
-        result.removedKey.putAll(removedKey)
+        val result = Utils.new(this.javaClass, _dataMap.toMap().toMutableMap())
+        result._parents.addAll(_parents)
+        result._removedKey.putAll(_removedKey)
         return result
     }
 
     // 将Dict的所有键值对转换为Map
     fun toMap(): Map<Symbols.Symbol<*>, Any> {
         val result = mutableMapOf<Symbols.Symbol<*>, Any>()
-        for (parent in parents) {
-            result.putAll(parent.dataMap)
+        for (parent in _parents) {
+            result.putAll(parent._dataMap)
         }
-        result.putAll(dataMap)
-        for (key in removedKey.keys) {
+        result.putAll(_dataMap)
+        for (key in _removedKey.keys) {
             result.remove(key)
         }
         return result
@@ -69,7 +68,7 @@ class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapO
 
     // 使用hashMap作为本对象的hashcode
     override fun hashCode(): Int {
-        return dataMap.hashCode()
+        return _dataMap.hashCode()
     }
 
     // 使用hashMap的toString
@@ -84,15 +83,15 @@ class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapO
 
     // 设置键值对
     operator fun <V> set(key: Symbols.Symbol<V>, value: V) {
-        this.dataMap[key] = value as Any
-        removedKey.remove(key)
+        this._dataMap[key] = value as Any
+        _removedKey.remove(key)
     }
 
     // 判断键值对是否存在
     operator fun contains(key: Symbols.Symbol<*>): Boolean {
-        if (removedKey.containsKey(key)) return false
-        if (!dataMap.containsKey(key)) {
-            for (parent in parents.reversed()) {
+        if (_removedKey.containsKey(key)) return false
+        if (!_dataMap.containsKey(key)) {
+            for (parent in _parents.reversed()) {
                 if (parent.contains(key)) return true
             }
             return false
@@ -104,8 +103,8 @@ class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapO
     operator fun plus(other: Dict): Dict {
         val result = clone()
         for (entry in other.toMap()) {
-            result.dataMap[entry.key] = entry.value
-            result.removedKey.remove(entry.key)
+            result._dataMap[entry.key] = entry.value
+            result._removedKey.remove(entry.key)
         }
         return result
     }
@@ -122,14 +121,14 @@ class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapO
     // 合并另一个字典至本对象
     operator fun plusAssign(other: Dict) {
         for (entry in other.toMap()) {
-            dataMap[entry.key] = entry.value
-            removedKey.remove(entry.key)
+            _dataMap[entry.key] = entry.value
+            _removedKey.remove(entry.key)
         }
     }
 
     // 从本对象中剔除掉与另一个字典共同的部分
     operator fun minusAssign(other: Dict) {
-        for (key in other.dataMap.keys) {
+        for (key in other._dataMap.keys) {
             remove(key)
         }
     }
@@ -137,7 +136,7 @@ class Dict(private val dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapO
     // 判断两个字典的内容是否相等
     override operator fun equals(other: Any?): Boolean {
         if (other !is Dict) return false
-        if (dataMap.hashCode() == other.hashCode()) return true
+        if (_dataMap.hashCode() == other.hashCode()) return true
         val map1 = this.toMap()
         val map2 = other.toMap()
         if (map1.size != map2.size) return false

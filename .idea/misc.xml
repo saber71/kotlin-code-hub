@@ -5,12 +5,14 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/behavior-tree/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/action/pom.xml" />
+        <option value="$PROJECT_DIR$/xml-executor-app/pom.xml" />
+        <option value="$PROJECT_DIR$/xml-executor-plugin-attributes/pom.xml" />
+        <option value="$PROJECT_DIR$/xml-executor/pom.xml" />
       </set>
     </option>
   </component>

@@ -6,8 +6,8 @@ import heraclius.common.Function
 
 // 始终返回失败
 class AlwaysFailure(fn: Function<Unit>? = null) : Behavior.Decorator(fn) {
-    override fun run(): Status {
-        super.run()
+    override fun _run(): Status {
+        super._run()
         return Status.FAILURE
     }
 }

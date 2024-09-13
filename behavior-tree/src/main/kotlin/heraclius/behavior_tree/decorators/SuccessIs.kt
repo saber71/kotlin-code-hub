@@ -6,8 +6,8 @@ import heraclius.common.Function
 
 // 成功状态转为指定的状态
 class SuccessIs(val targetStatus: Status, fn: Function<Unit>? = null) : Behavior.Decorator(fn) {
-    override fun run(): Status {
-        val status = super.run()
+    override fun _run(): Status {
+        val status = super._run()
         if (status == Status.SUCCESS) return targetStatus
         return status
     }

@@ -1,13 +1,25 @@
 package heraclius.common
 
 import org.reflections.Reflections
+import kotlin.reflect.KClass
 
 object Utils {
     // 缓存获取父类列表的函数
     private val parentClassesCache = mutableMapOf<Class<*>, List<Class<*>>>()
 
-    // 缓存反射操作
+    // 缓存反射操作的对象
     val reflections = Reflections("heraclius")
+
+    // 用给定的类创建一个新实例
+    fun <V> new(cls: Class<V>, vararg args: Any): V {
+        @Suppress("UNCHECKED_CAST")
+        return cls.constructors[0].newInstance(*args) as V
+    }
+
+    // 用给定的kotlin类创建一个新实例
+    fun <V : Any> new(cls: KClass<V>, vararg args: Any): V {
+        return new(cls.java, args)
+    }
 
     /**
      * 获取对象的类信息

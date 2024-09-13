@@ -5,7 +5,7 @@ import heraclius.behavior_tree.Status
 
 // 始终失败
 class Failure : Behavior() {
-    override fun run(): Status {
+    override fun _run(): Status {
         return Status.FAILURE
     }
 }
