@@ -10,8 +10,43 @@ object Utils {
     // 缓存反射操作的对象
     val reflections = Reflections("heraclius")
 
+    /**
+     * 获取指定类的所有子类实例
+     *
+     * @param cls 泛型类，指定要获取子类实例的基类
+     * @param <V> 泛型，表示基类的类型
+     * @return 返回一个列表，包含基类所有子类的实例
+     *
+     * 该函数通过反射机制获取指定基类的所有子类，并尝试通过无参构造函数创建这些子类的实例
+     * 如果某个子类没有无参构造函数，则抛出 RuntimeException
+     */
+    fun <V> getSubClassInstances(cls: Class<V>): List<V> {
+        // 获取指定基类的所有子类
+        val subClasses = reflections.getSubTypesOf(cls)
+        // 创建一个可变列表，用于存储子类实例
+        val instances = mutableListOf<V>()
+        // 遍历所有子类
+        for (subClass in subClasses) {
+            // 查找子类的无参构造函数
+            val nonParamCons = subClass.constructors.find { it.parameters.isEmpty() }
+            // 如果找到无参构造函数，则创建实例并添加到列表中
+            if (nonParamCons != null) {
+                instances.add(new(subClass))
+            } else {
+                // 如果没有无参构造函数，则抛出异常
+                throw RuntimeException("找不到无参构造函数")
+            }
+        }
+        // 返回子类实例列表
+        return instances.toList()
+    }
+
     // 用给定的类创建一个新实例
     fun <V> new(cls: Class<V>, vararg args: Any): V {
+        @Suppress("NO_REFLECTION_IN_CLASS_PATH")
+        val objectInstance = cls::class.objectInstance
+        @Suppress("UNCHECKED_CAST")
+        if (objectInstance != null) return objectInstance as V
         @Suppress("UNCHECKED_CAST")
         return cls.constructors[0].newInstance(*args) as V
     }
@@ -71,8 +106,7 @@ object Utils {
      * @return 如果`clazz`是`parentCls`的子类，则返回`true`；否则返回`false`。
      */
     fun instanceof(clazz: Class<*>, parentCls: Class<*>): Boolean {
-        var cls = clazz
-        val parentClasses = getParentClasses(cls)
+        val parentClasses = getParentClasses(clazz)
         return parentClasses.contains(parentCls)
     }
 

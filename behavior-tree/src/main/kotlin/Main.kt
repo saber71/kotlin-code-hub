@@ -5,7 +5,7 @@ import heraclius.behavior_tree.decorators.AlwaysFailure
 import heraclius.behavior_tree.decorators.AlwaysSuccess
 
 fun main() {
-    val root = Selector(true) {
+    val root = Selector {
         AlwaysFailure {
             Success()
         }
@@ -13,6 +13,5 @@ fun main() {
             Failure()
         }
     }
-    print(root.tick())
-    print(root)
+    println(root.tick())
 }

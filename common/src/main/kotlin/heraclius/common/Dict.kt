@@ -18,7 +18,7 @@ class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMap
 
     // 删除键值对
     fun remove(key: Symbols.Symbol<*>): Dict {
-        _removedKey.put(key, true)
+        _removedKey[key] = true
         _dataMap.remove(key)
         return this
     }
