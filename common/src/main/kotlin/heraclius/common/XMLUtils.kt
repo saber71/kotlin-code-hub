@@ -19,6 +19,9 @@ object XMLUtils {
     // 子元素映射的键
     val childrenMap = Symbols.of<Map<String, List<Dict>>>("childrenMap")
 
+    // 子节点作为父节点的指定属性
+    val for_ = Symbols.of<String>("for")
+
     /**
      * 将给定的XML元素转换为Dict对象。
      *

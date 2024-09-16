@@ -72,5 +72,9 @@ object Symbols {
             // 调用descriptor获取描述，并处理可能的空值
             return "Symbol(${descriptor.invoke() ?: ""})"
         }
+
+        fun description(): String {
+            return descriptor.invoke() ?: throw RuntimeException("Symbol description is null")
+        }
     }
 }

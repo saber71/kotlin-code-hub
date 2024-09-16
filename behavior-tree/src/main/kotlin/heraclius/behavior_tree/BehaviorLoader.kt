@@ -8,6 +8,7 @@ import heraclius.behavior_tree.composites.Selector
 import heraclius.behavior_tree.decorators.*
 import heraclius.common.Dict
 import heraclius.common.Function
+import heraclius.common.Symbols
 import heraclius.common.Utils
 import heraclius.common.XMLUtils
 
@@ -41,6 +42,22 @@ abstract class BehaviorLoader(vararg names: String) {
             val tagName = dict[XMLUtils.tagName]
             val loader = _loaderMap.value[tagName] ?: throw RuntimeException("No loader found for tag: $tagName")
             return loader.load(dict)
+        }
+
+        // 读取属性，支持读取字符串和函数。
+        fun readProperty(dict: Dict, symbol: Symbols.Symbol<String>): String {
+            if (symbol in dict) return dict[symbol]
+            val description = symbol.description()
+            val fnSymbol = Symbols.of<Function<String>>("$${description}$")
+            if (fnSymbol in dict) return dict[fnSymbol]()
+            for (child in dict[XMLUtils.children]) {
+                if (XMLUtils.for_ in child && child[XMLUtils.for_] == description) {
+                    val fn = handle(child)
+                    dict[fnSymbol] = fn.function()
+                    return fn.function()
+                }
+            }
+            throw RuntimeException("No property $symbol found for tag: ${dict[XMLUtils.tagName]}")
         }
     }
 
@@ -155,7 +172,7 @@ abstract class BehaviorLoader(vararg names: String) {
      */
     class DefaultFunction : BehaviorLoader("key", "value") {
         override fun load(dict: Dict): Result {
-            return Result({ dict[XMLUtils.value] })
+            return Result({ readProperty(dict, XMLUtils.value) })
         }
     }
 
@@ -164,7 +181,7 @@ abstract class BehaviorLoader(vararg names: String) {
      */
     class StatusFunction : BehaviorLoader("status") {
         override fun load(dict: Dict): Result {
-            return Result({ Status.valueOf(dict[XMLUtils.value].uppercase()) })
+            return Result({ Status.valueOf(readProperty(dict, XMLUtils.value).uppercase()) })
         }
     }
 
