@@ -50,12 +50,13 @@ abstract class BehaviorLoader(vararg names: String) {
             val description = symbol.description()
             val fnSymbol = Symbols.of<Function<String>>("$${description}$")
             if (fnSymbol in dict) return dict[fnSymbol]()
-            for (child in dict[XMLUtils.children]) {
-                if (XMLUtils.for_ in child && child[XMLUtils.for_] == description) {
-                    val fn = handle(child)
-                    dict[fnSymbol] = fn.function()
-                    return fn.function()
-                }
+            val children = dict[XMLUtils.children]
+            var child = dict[XMLUtils.forPropertyMapChild][symbol]
+            if (child == null && children.size == 1 && symbol == XMLUtils.value) child = children[0]
+            if (child != null) {
+                val fn = handle(child)
+                dict[fnSymbol] = fn.function()
+                return fn.function()
             }
             throw RuntimeException("No property $symbol found for tag: ${dict[XMLUtils.tagName]}")
         }
@@ -109,7 +110,7 @@ abstract class BehaviorLoader(vararg names: String) {
         "SuccessIs",
     ) {
         override fun load(dict: Dict): Result {
-            val childrenMap = dict[XMLUtils.childrenMap]
+            val childrenMap = dict[XMLUtils.tagNameMapChildren]
             val children = dict[XMLUtils.children]
             val tagName = dict[XMLUtils.tagName]
             val fn = { dict[XMLUtils.children].forEach { load(it) } }
