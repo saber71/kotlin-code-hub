@@ -1,6 +1,8 @@
 package heraclius.common
 
 import org.reflections.Reflections
+import java.io.InputStreamReader
+import java.nio.file.Path
 import kotlin.reflect.KClass
 
 object Utils {
@@ -43,7 +45,6 @@ object Utils {
 
     // 用给定的类创建一个新实例
     fun <V> new(cls: Class<V>, vararg args: Any): V {
-        @Suppress("NO_REFLECTION_IN_CLASS_PATH")
         val objectInstance = cls::class.objectInstance
         @Suppress("UNCHECKED_CAST")
         if (objectInstance != null) return objectInstance as V
@@ -148,5 +149,33 @@ object Utils {
 
         // 返回合并后的列表，并去除重复的元素
         return merged.distinct()
+    }
+
+    /**
+     * 从指定路径读取资源文件内容
+     *
+     * 此函数用于读取位于特定路径的资源文件，并返回文件的内容作为字符串它主要用于处理
+     * 那些需要从资源目录中加载而非直接访问文件系统的情况
+     *
+     * @param path 资源文件的路径
+     * @return 资源文件的内容
+     * @throws RuntimeException 如果指定路径的资源未找到，则抛出运行时异常
+     */
+    fun readResourceAsText(path: Path): String {
+        // 获取系统类加载器资源流，如果资源不存在，抛出运行时异常
+        val inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(path.toString())
+            ?: throw RuntimeException("resource $path not found")
+
+        // 将输入流包装成字符输入流，以便于读取文本数据
+        val reader = InputStreamReader(inputStream)
+
+        // 读取字符输入流中的所有文本内容
+        val text = reader.readText()
+
+        // 关闭字符输入流，释放资源
+        reader.close()
+
+        // 返回读取到的文本内容
+        return text
     }
 }
