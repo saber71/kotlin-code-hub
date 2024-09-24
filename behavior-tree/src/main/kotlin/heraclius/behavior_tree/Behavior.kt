@@ -1,6 +1,6 @@
 package heraclius.behavior_tree
 
-import heraclius.common.Function
+import heraclius.common.Func
 
 /**
  * 行为类，提供基础的行为处理逻辑。
@@ -60,7 +60,7 @@ open class Behavior() {
     }
 
     // 执行初始化函数，允许外部在行为初始化时执行特定操作
-    protected fun _execInitFn(fn: Function<Unit>?) {
+    protected fun _execInitFn(fn: Func<Unit>?) {
         if (fn != null) {
             _stacks.add(this)
             fn()
@@ -72,7 +72,7 @@ open class Behavior() {
      * Composite 类，用于组合多种行为。
      * 实现了行为树中的组合模式。
      */
-    open class Composite(fn: Function<Unit>? = null, val memory: Boolean = false) : Behavior() {
+    open class Composite(fn: Func<Unit>? = null, val memory: Boolean = false) : Behavior() {
         val children = mutableListOf<Behavior>() // 子行为列表
         protected var _index = 0 // 当前子节点索引
 
@@ -96,7 +96,7 @@ open class Behavior() {
      * Decorator 类，用于装饰单个行为。
      * 实现了行为树中的装饰模式。
      */
-    open class Decorator(fn: Function<Unit>? = null) : Behavior() {
+    open class Decorator(fn: Func<Unit>? = null) : Behavior() {
         var child = NOOP // 子节点
 
         init {

@@ -6,11 +6,7 @@ import heraclius.behavior_tree.composites.MemorySequence
 import heraclius.behavior_tree.composites.Parallel
 import heraclius.behavior_tree.composites.Selector
 import heraclius.behavior_tree.decorators.*
-import heraclius.common.Dict
-import heraclius.common.Function
-import heraclius.common.Symbols
-import heraclius.common.Utils
-import heraclius.common.XMLUtils
+import heraclius.common.*
 
 /**
  * 行为树的加载器类，用于从描述字典中加载行为树节点。
@@ -48,7 +44,7 @@ abstract class BehaviorLoader(vararg names: String) {
         fun readProperty(dict: Dict, symbol: Symbols.Symbol<String>): String {
             if (symbol in dict) return dict[symbol]
             val description = symbol.description()
-            val fnSymbol = Symbols.of<Function<String>>("$${description}$")
+            val fnSymbol = Symbols.of<Func<String>>("$${description}$")
             if (fnSymbol in dict) return dict[fnSymbol]()
             val children = dict[XMLUtils.children]
             var child = dict[XMLUtils.forPropertyMapChild][symbol]
@@ -124,21 +120,21 @@ abstract class BehaviorLoader(vararg names: String) {
                     "FailureIs" -> FailureIs(
                         handle(
                             childrenMap["status"]?.last() ?: throw RuntimeException("找不到名为status的子节点")
-                        ).function<Function<Status>>()(),
+                        ).function<Func<Status>>()(),
                         fn
                     )
 
                     "SuccessIs" -> SuccessIs(
                         handle(
                             childrenMap["status"]?.last() ?: throw RuntimeException("找不到名为status的子节点")
-                        ).function<Function<Status>>()(),
+                        ).function<Func<Status>>()(),
                         fn
                     )
 
                     "RunningIs" -> RunningIs(
                         handle(
                             childrenMap["status"]?.last() ?: throw RuntimeException("找不到名为status的子节点")
-                        ).function<Function<Status>>()(),
+                        ).function<Func<Status>>()(),
                         fn
                     )
 

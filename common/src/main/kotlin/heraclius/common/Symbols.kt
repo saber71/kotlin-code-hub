@@ -67,7 +67,7 @@ object Symbols {
      *
      * @property descriptor 一个lambda表达式，用于延迟获取符号的描述。
      */
-    class Symbol<V>(private val descriptor: Function<String?>) {
+    class Symbol<V>(private val descriptor: Func<String?>) {
         override fun toString(): String {
             // 调用descriptor获取描述，并处理可能的空值
             return "Symbol(${descriptor.invoke() ?: ""})"

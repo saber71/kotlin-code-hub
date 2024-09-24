@@ -178,4 +178,28 @@ object Utils {
         // 返回读取到的文本内容
         return text
     }
+
+    fun toNumber(v: Any): Number {
+        if (v is Number) return v
+        else {
+            val value = v.toString()
+            return if (value.contains(".")) {
+                value.toDouble()
+            } else {
+                value.toLong()
+            }
+        }
+    }
+
+    fun toBoolean(v: Any): Boolean {
+        return if (v is Boolean) v else v.toString().toBoolean()
+    }
+
+    fun toString(v: Any): String {
+        return if (v is String) v else v.toString()
+    }
+
+    fun toDict(v: Any): Dict {
+        return if (v is Dict) v else throw RuntimeException("${v.javaClass} is not dict")
+    }
 }

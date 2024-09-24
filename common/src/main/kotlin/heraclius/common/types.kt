@@ -1,4 +1,5 @@
 package heraclius.common
 
-typealias Function<ReturnType> = () -> ReturnType
-typealias Arg1Function<Arg> = (Arg) -> Unit
+typealias Func<ReturnType> = () -> ReturnType
+typealias VoidFunc = () -> Unit
+typealias Arg1Func<Arg> = (Arg) -> Unit
