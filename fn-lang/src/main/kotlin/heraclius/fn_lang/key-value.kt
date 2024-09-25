@@ -54,6 +54,7 @@ fun setValue(key: FnLangSymbol, value: FnLangAny): FnLangVoid {
             FnLangType.Boolean -> Utils.toBoolean(v)
             FnLangType.String -> Utils.toString(v)
             Dict -> Utils.toDict(v)
+            FnLangType.List -> Utils.toList(v)
         }
     }
 }
@@ -68,6 +69,7 @@ fun getValue(key: FnLangSymbol, dict: FnLangDict = { FnLangContext.current() }):
             FnLangType.Boolean -> Utils.expectType(v, Boolean::class.java)
             FnLangType.String -> Utils.expectType(v, String::class.java)
             Dict -> Utils.expectType(v, Dict::class.java)
+            FnLangType.List -> Utils.expectType(v, List::class.java)
         }
     }
 }
@@ -115,6 +117,18 @@ fun getDict(key: FnLangSymbol, dict: FnLangDict = { FnLangContext.current() }): 
         val keyData = FnLangContext.current()[DEFINE_KEYS].defined(symbol)
         when (keyData.type) {
             Dict -> Utils.expectType(v, heraclius.common.Dict::class.java)
+            else -> throw RuntimeException("$v is not a dict")
+        }
+    }
+}
+
+fun getList(key: FnLangSymbol, dict: FnLangDict = { FnLangContext.current() }): FnLangList {
+    return {
+        val symbol = fnLangSymbol(key)
+        val v = dict()[symbol]
+        val keyData = FnLangContext.current()[DEFINE_KEYS].defined(symbol)
+        when (keyData.type) {
+            FnLangType.List -> Utils.expectType(v, List::class.java)
             else -> throw RuntimeException("$v is not a dict")
         }
     }

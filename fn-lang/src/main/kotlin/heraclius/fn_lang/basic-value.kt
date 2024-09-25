@@ -40,6 +40,16 @@ fun dict(value: Any = Unit): FnLangDict {
     }
 }
 
+fun list(value: Any = Unit): FnLangList {
+    return {
+        if (value == Unit) listOf<Any>()
+        else {
+            val v = _handleFunc(value)
+            Utils.toList(v)
+        }
+    }
+}
+
 fun value(v: Any): FnLangAny {
     return { _handleFunc(v) }
 }

@@ -9,7 +9,8 @@ enum class FnLangType {
     String,
     Number,
     Boolean,
-    Dict
+    Dict,
+    List
 }
 
 typealias FnLangAny = Func<Any>
@@ -18,10 +19,16 @@ typealias FnLangNumber = Func<Number>
 typealias FnLangBoolean = Func<Boolean>
 typealias FnLangDict = Func<Dict>
 typealias FnLangVoid = Func<Unit>
+typealias FnLangList = Func<List<*>>
 typealias FnLangSymbol = Func<Symbols.Symbol<Any>>
 
 fun fnLangString(fn: Func<*>): String {
     return Utils.expectType(fn(), String::class.java)
+}
+
+fun fnLangList(fn: Func<*>): List<Any> {
+    @Suppress("UNCHECKED_CAST")
+    return Utils.expectType(fn(), List::class.java) as List<Any>
 }
 
 fun fnLangNumber(fn: Func<*>): Number {
@@ -38,5 +45,5 @@ fun fnLangDict(fn: Func<*>): Dict {
 
 fun fnLangSymbol(fn: Func<*>): Symbols.Symbol<Any> {
     @Suppress("UNCHECKED_CAST")
-    return Utils.expectType(fn(), Symbols.Symbol::class.java) as heraclius.common.Symbols.Symbol<Any>
+    return Utils.expectType(fn(), Symbols.Symbol::class.java) as Symbols.Symbol<Any>
 }

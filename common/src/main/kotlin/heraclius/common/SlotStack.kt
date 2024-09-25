@@ -16,6 +16,11 @@ open class SlotStack<V> : Iterable<V> {
         _list.add(slot)
     }
 
+    fun pop() {
+        if (_list.isEmpty()) return
+        recovery(_list.last().value)
+    }
+
     fun remove(item: V) {
         val slots = _itemMapSlots[item] ?: return
         for (slot in slots) {

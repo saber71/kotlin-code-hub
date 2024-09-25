@@ -207,6 +207,12 @@ object Utils {
         return if (v is Dict) v else throw RuntimeException("${v.javaClass} is not dict")
     }
 
+    // 将给定的值转换为列表类型
+    fun toList(v: Any): List<Any> {
+        @Suppress("UNCHECKED_CAST")
+        return if (v is List<*>) v as List<Any> else throw RuntimeException("${v.javaClass} is not List")
+    }
+
     // 检查给定的值是否属于指定的类型
     fun <T> expectType(value: Any?, type: Class<T>): T {
         if (!type.isInstance(value))
