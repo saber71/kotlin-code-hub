@@ -2,31 +2,30 @@ package heraclius.fn_lang
 
 import heraclius.common.Dict
 import heraclius.common.Utils
-import kotlin.reflect.KFunction
 
-fun handleFunc(v: Any): Any {
+private fun _handleFunc(v: Any): Any {
     @Suppress("UNCHECKED_CAST")
-    if (v is KFunction<*>) return (v as FnLangAny)()
+    if (v is Function<*>) return (v as FnLangAny)()
     return v
 }
 
-fun string(value: String): FnLangString {
+fun string(value: Any): FnLangString {
     return {
-        val v = handleFunc(value)
+        val v = _handleFunc(value)
         Utils.toString(v)
     }
 }
 
-fun number(value: Number): FnLangNumber {
+fun number(value: Any): FnLangNumber {
     return {
-        val v = handleFunc(value)
+        val v = _handleFunc(value)
         Utils.toNumber(v)
     }
 }
 
 fun boolean(value: Any): FnLangBoolean {
     return {
-        val v = handleFunc(value)
+        val v = _handleFunc(value)
         Utils.toBoolean(v)
     }
 }
@@ -35,12 +34,12 @@ fun dict(value: Any = Unit): FnLangDict {
     return {
         if (value == Unit) Dict()
         else {
-            val v = handleFunc(value)
+            val v = _handleFunc(value)
             Utils.toDict(v)
         }
     }
 }
 
 fun value(v: Any): FnLangAny {
-    return { handleFunc(v) }
+    return { _handleFunc(v) }
 }

@@ -179,6 +179,7 @@ object Utils {
         return text
     }
 
+    // 将给定的值转换为数字类型
     fun toNumber(v: Any): Number {
         if (v is Number) return v
         else {
@@ -191,15 +192,26 @@ object Utils {
         }
     }
 
+    // 将给定的值转换为布尔类型
     fun toBoolean(v: Any): Boolean {
         return if (v is Boolean) v else v.toString().toBoolean()
     }
 
+    // 将给定的值转换为字符串类型
     fun toString(v: Any): String {
         return if (v is String) v else v.toString()
     }
 
+    // 将给定的值转换为字典类型
     fun toDict(v: Any): Dict {
         return if (v is Dict) v else throw RuntimeException("${v.javaClass} is not dict")
+    }
+
+    // 检查给定的值是否属于指定的类型
+    fun <T> expectType(value: Any?, type: Class<T>): T {
+        if (!type.isInstance(value))
+            throw RuntimeException("expect type ${type.simpleName} but got ${value?.javaClass?.simpleName}")
+        @Suppress("UNCHECKED_CAST")
+        return value as T
     }
 }
