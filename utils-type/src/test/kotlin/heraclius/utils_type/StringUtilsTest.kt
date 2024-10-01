@@ -43,4 +43,11 @@ class StringUtilsTest {
         assertEquals(StringUtils.camelCase("-HelloWorld"), "helloWorld")
         assertEquals(StringUtils.camelCase("-Hello_-World_"), "helloWorld")
     }
+
+    @Test
+    fun width() {
+        assertEquals(11, StringUtils.width("Hello World"))
+        assertEquals(12, StringUtils.width("你好，世界。"))
+        assertEquals(13, StringUtils.width("Hello，世界。"))
+    }
 }

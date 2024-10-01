@@ -40,4 +40,13 @@ object StringUtils {
             .replace(Regex("--+"), "-")
             .replace(Regex("(-+$)|(^-+)"), "")
     }
+
+    fun width(str: String): Int {
+        return str.map { char ->
+            when {
+                char in '\u1100'..'\uD7FF' || char in '\uF900'..'\uFAFF' || char in '\uFE30'..'\uFE6F' || char in '\uFF00'..'\uFFEF' -> 2
+                else -> 1
+            }
+        }.sum()
+    }
 }
