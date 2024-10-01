@@ -21,6 +21,7 @@
         <module>terminal</module>
         <module>fn-lang</module>
         <module>utils-reflection</module>
+        <module>utils-type</module>
     </modules>
 
     <dependencyManagement>
