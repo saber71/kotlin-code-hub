@@ -19,9 +19,9 @@
         <module>common</module>
         <module>behavior-tree</module>
         <module>terminal</module>
-        <module>fn-lang</module>
         <module>utils-reflection</module>
         <module>utils-type</module>
+        <module>utils-dict</module>
     </modules>
 
     <dependencyManagement>
@@ -39,7 +39,22 @@
             <dependency>
                 <groupId>heraclius</groupId>
                 <artifactId>terminal</artifactId>
-                <version>1.0</version>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>utils-dict</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>utils-reflection</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>heraclius</groupId>
+                <artifactId>utils-type</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>

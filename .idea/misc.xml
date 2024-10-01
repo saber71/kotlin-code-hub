@@ -10,6 +10,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/action/pom.xml" />
+        <option value="$PROJECT_DIR$/fn-lang/pom.xml" />
         <option value="$PROJECT_DIR$/xml-executor-app/pom.xml" />
         <option value="$PROJECT_DIR$/xml-executor-plugin-attributes/pom.xml" />
         <option value="$PROJECT_DIR$/xml-executor/pom.xml" />
