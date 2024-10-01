@@ -6,7 +6,7 @@ import java.net.URL
 import java.net.URLDecoder
 import java.util.jar.JarFile
 
-object ClassFinder {
+object ClassUtils {
     private val _classLoader: ClassLoader = Thread.currentThread().contextClassLoader
 
     /**
@@ -36,8 +36,7 @@ object ClassFinder {
             } else {
                 val className = "${packageName}.${file.nameWithoutExtension}".replace('/', '.')
                 try {
-                    Class.forName(className, false, _classLoader)
-                        .let { listOf(it) }
+                    listOf(Class.forName(className, false, _classLoader))
                 } catch (e: ClassNotFoundException) {
                     emptyList()
                 }

@@ -1,5 +1,5 @@
-import heraclius.common.ClassFinder
+import heraclius.common.ClassUtils
 
 fun main() {
-    print(ClassFinder.findClassesInPackage("heraclius"))
+    print(ClassUtils.findClassesInPackage("heraclius"))
 }

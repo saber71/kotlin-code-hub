@@ -20,6 +20,7 @@
         <module>behavior-tree</module>
         <module>terminal</module>
         <module>fn-lang</module>
+        <module>utils-reflection</module>
     </modules>
 
     <dependencyManagement>
