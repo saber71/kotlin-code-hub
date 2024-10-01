@@ -1,5 +1,8 @@
 package heraclius.utils_type
 
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 
 object ConvertType {
@@ -32,6 +35,8 @@ object ConvertType {
         register(Converter(List::class.java, ::toList))
         register(Converter(Map::class.java, ::toMap))
         register(Converter(null, ::toNull))
+        register(Converter(LocalDate::class.java, ::toLocalDate))
+        register(Converter(LocalDateTime::class.java, ::toLocalDateTime))
     }
 
     fun <T> register(converter: Converter<T>) {
@@ -191,6 +196,26 @@ object ConvertType {
             null -> {}
             else -> checkType(callToConvert(value, "toNull"), null)
                 ?: throw IllegalArgumentException("Cannot convert $value to Null")
+        }
+    }
+
+    fun toLocalDateTime(value: Any?): LocalDateTime {
+        return when (value) {
+            is LocalDateTime -> value
+            is String -> DateUtils.from(value)
+            is Long -> DateUtils.from(value)
+            is LocalDate -> LocalDateTime.of(value, LocalTime.of(0, 0, 0))
+            else -> throw IllegalArgumentException("Cannot convert $value to LocalDateTime")
+        }
+    }
+
+    fun toLocalDate(value: Any?): LocalDate {
+        return when (value) {
+            is LocalDate -> value
+            is String -> DateUtils.from(value).toLocalDate()
+            is Long -> DateUtils.from(value).toLocalDate()
+            is LocalDateTime -> value.toLocalDate()
+            else -> throw IllegalArgumentException("Cannot convert $value to LocalDate")
         }
     }
 
