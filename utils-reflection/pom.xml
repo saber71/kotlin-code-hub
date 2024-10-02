@@ -81,6 +81,18 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>heraclius</groupId>
+            <artifactId>utils-type</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>heraclius</groupId>
+            <artifactId>utils-dict</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

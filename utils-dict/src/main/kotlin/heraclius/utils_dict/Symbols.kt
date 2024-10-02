@@ -1,6 +1,6 @@
 package heraclius.utils_dict
 
-import heraclius.utils_type.ConvertType
+import heraclius.utils_type.TypeUtils
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -79,18 +79,13 @@ object Symbols {
      */
     class Symbol<T>(private val _descriptor: Function0<String?>, private val _typer: Function0<Class<T>?>) {
         override fun toString(): String {
-            // 调用descriptor获取描述，并处理可能的空值
-            return "Symbol(${_descriptor.invoke() ?: ""})"
-        }
-
-        fun description(): String {
             return _descriptor.invoke() ?: throw RuntimeException("Symbol description is null")
         }
 
         fun checkType(value: Any?): T {
             @Suppress("UNCHECKED_CAST")
             val type = _typer.invoke() ?: return value as T
-            return ConvertType.checkType(value, type)
+            return TypeUtils.checkType(value, type)
         }
     }
 }

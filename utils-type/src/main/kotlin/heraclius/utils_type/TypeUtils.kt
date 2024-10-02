@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 
-object ConvertType {
+object TypeUtils {
     data class Converter<To>(
         val toType: Class<To>?, val fn: ((value: Any?) -> To)?, val srcTypes: List<Class<*>?>? = null
     ) {
@@ -246,7 +246,7 @@ object ConvertType {
             throw IllegalArgumentException("${value}的类型与${targetType}不一致")
         } else {
             val checkResult =
-                targetType.isAssignableFrom(value.javaClass)
+                targetType.isAssignableFrom(javaClass(value))
                         || targetType.isInstance(value)
                         || (value is Int && targetType == Int::class.java)
                         || (value is Short && targetType == Short::class.java)
@@ -259,5 +259,21 @@ object ConvertType {
             if (!checkResult) throw IllegalArgumentException("${value}的类型与${targetType}不一致")
         }
         @Suppress("UNCHECKED_CAST") return value as T
+    }
+
+    fun <T : Any> javaClass(inst: T): Class<T> {
+        val cls = when (inst) {
+            is Int -> Int::class.java
+            is Short -> Short::class.java
+            is Byte -> Byte::class.java
+            is Long -> Long::class.java
+            is Float -> Float::class.java
+            is Double -> Double::class.java
+            is Boolean -> Boolean::class.java
+            is Char -> Char::class.java
+            else -> inst.javaClass
+        }
+        @Suppress("UNCHECKED_CAST")
+        return cls as Class<T>
     }
 }
