@@ -3,12 +3,14 @@ package heraclius.utils_dict
 import java.util.*
 
 // 字典键值对
-class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMapOf()) {
+class Dict {
+    private val _dataMap: MutableMap<Symbol<*>, Any> = mutableMapOf()
+
     // 父级字典
     private val _parents = mutableSetOf<Dict>()
 
     // 删除的键值对
-    private val _removedKey = WeakHashMap<Symbols.Symbol<*>, Any>()
+    private val _removedKey = WeakHashMap<Symbol<*>, Any>()
 
     // 继承父级字典
     fun extend(parent: Dict): Dict {
@@ -17,14 +19,14 @@ class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMap
     }
 
     // 删除键值对
-    fun remove(key: Symbols.Symbol<*>): Dict {
+    fun remove(key: Symbol<*>): Dict {
         _removedKey[key] = true
         _dataMap.remove(key)
         return this
     }
 
     // 获取键值对，未找到则返回null
-    fun <V> valueOrNull(key: Symbols.Symbol<V>): V? {
+    fun <V> valueOrNull(key: Symbol<V>): V? {
         if (_removedKey.containsKey(key)) return null
         if (!_dataMap.containsKey(key)) {
             for (parent in _parents.reversed()) {
@@ -39,22 +41,23 @@ class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMap
     }
 
     // 获取键值对，未找到则返回默认值
-    fun <V> value(key: Symbols.Symbol<V>, default: V): V {
+    fun <V> value(key: Symbol<V>, default: V): V {
         val value = valueOrNull(key) ?: return default
         return value
     }
 
     // 复制本对象
     fun clone(): Dict {
-        val result = Dict(_dataMap.toMap().toMutableMap())
+        val result = Dict()
+        result._dataMap.putAll(_dataMap)
         result._parents.addAll(_parents)
         result._removedKey.putAll(_removedKey)
         return result
     }
 
     // 将Dict的所有键值对转换为Map
-    fun toMap(): Map<Symbols.Symbol<*>, Any> {
-        val result = mutableMapOf<Symbols.Symbol<*>, Any>()
+    fun toMap(): Map<Symbol<*>, Any> {
+        val result = mutableMapOf<Symbol<*>, Any>()
         for (parent in _parents) {
             result.putAll(parent.toMap())
         }
@@ -76,18 +79,18 @@ class Dict(private val _dataMap: MutableMap<Symbols.Symbol<*>, Any> = mutableMap
     }
 
     // 获取键值对
-    operator fun <V> get(key: Symbols.Symbol<V>): V {
+    operator fun <V> get(key: Symbol<V>): V {
         return this.valueOrNull(key) ?: throw RuntimeException("$key not found")
     }
 
     // 设置键值对
-    operator fun <V> set(key: Symbols.Symbol<V>, value: V) {
+    operator fun <V> set(key: Symbol<V>, value: V) {
         this._dataMap[key] = key.checkType(value) as Any
         _removedKey.remove(key)
     }
 
     // 判断键值对是否存在
-    operator fun contains(key: Symbols.Symbol<*>): Boolean {
+    operator fun contains(key: Symbol<*>): Boolean {
         if (_removedKey.containsKey(key)) return false
         if (!_dataMap.containsKey(key)) {
             for (parent in _parents.reversed()) {
