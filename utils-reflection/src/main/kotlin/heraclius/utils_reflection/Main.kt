@@ -27,4 +27,5 @@ fun main() {
     println(ClassReflection.toDict(user))
     println(User::class.memberProperties)
     println(ClassReflection.assign(user, user2))
+    println(JSON.stringify(ClassReflection.toMap(user)))
 }
