@@ -10,7 +10,7 @@ class ClassFilterTest {
         val classFilter = ClassFilter(ResourceClassesLoader("heraclius"))
         val subClass = classFilter.subClasses(ClassesLoader::class.java)
         assertContentEquals(
-            subClass.classList,
+            subClass.values,
             mutableListOf(
                 DefaultClassesLoader::class.java,
                 FileClassesLoader::class.java,
@@ -25,7 +25,7 @@ class ClassFilterTest {
     fun annotatedWith() {
         val classFilter = ClassFilter(ResourceClassesLoader("heraclius"))
         val subClass = classFilter.annotatedWith(Annotates.Class::class.java)
-        assertContentEquals(subClass.classList, mutableListOf(ClassWithAnnotation::class.java))
+        assertContentEquals(subClass.values, mutableListOf(ClassWithAnnotation::class.java))
     }
 
     @Annotates.Class

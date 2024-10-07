@@ -49,7 +49,8 @@ object ClassReflection {
         if (cls.objectInstance != null) return cls.objectInstance!!
         @Suppress("UNCHECKED_CAST")
         if (cls.constructors.size == 1) return cls.java.constructors[0].newInstance(*args) as T
-        return cls.java.getConstructor(*args.map { TypeUtils.javaClass(it) }.toTypedArray()).newInstance(*args)
+        @Suppress("UNCHECKED_CAST")
+        return cls.java.constructors[0].newInstance(*args) as T
     }
 
     fun <T> getPropertyOrNull(inst: Any, name: String): Property<T>? {

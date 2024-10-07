@@ -10,9 +10,14 @@
     <file url="file://$PROJECT_DIR$/fn-lang/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/fn-lang/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/terminal/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/terminal/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils-annotations/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils-annotations/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils-command/src/main/kotlin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/utils-command/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/utils-dict/src/main/kotlin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/utils-dict/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/utils-reflection/src/main/kotlin" charset="UTF-8" />
