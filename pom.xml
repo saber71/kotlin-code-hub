@@ -24,6 +24,8 @@
         <module>utils-dict</module>
         <module>utils-command</module>
         <module>utils-annotations</module>
+        <module>utils-command-sql</module>
+        <module>utils-command-sql-executor</module>
     </modules>
 
     <repositories>
@@ -82,31 +84,6 @@
             <dependency>
                 <groupId>heraclius</groupId>
                 <artifactId>common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>heraclius</groupId>
-                <artifactId>behavior-tree</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>heraclius</groupId>
-                <artifactId>terminal</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>heraclius</groupId>
-                <artifactId>utils-dict</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>heraclius</groupId>
-                <artifactId>utils-reflection</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>heraclius</groupId>
-                <artifactId>utils-type</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

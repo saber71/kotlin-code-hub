@@ -34,6 +34,8 @@
         <dependency>
             <groupId>heraclius</groupId>
             <artifactId>utils-reflection</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

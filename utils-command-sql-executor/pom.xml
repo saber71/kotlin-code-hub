@@ -9,7 +9,7 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>utils-reflection</artifactId>
+    <artifactId>utils-command-sql-executor</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,24 +31,16 @@
             <artifactId>kotlin-stdlib</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-        </dependency>
-        <dependency>
             <groupId>heraclius</groupId>
-            <artifactId>utils-type</artifactId>
+            <artifactId>utils-command</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>heraclius</groupId>
-            <artifactId>utils-dict</artifactId>
+            <artifactId>utils-command-sql</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
 
