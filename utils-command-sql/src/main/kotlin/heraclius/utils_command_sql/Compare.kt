@@ -8,4 +8,5 @@ object Compare {
     class LessEqual(val left: Command, val right: Command) : Command
     class Greater(val left: Command, val right: Command) : Command
     class GreaterEqual(val left: Command, val right: Command) : Command
+    class In(val left: Command, val right: Command) : Command
 }
