@@ -7,4 +7,6 @@ class Select(val tableName: Table.Name) : Command {
     val where = mutableListOf<Command>()
     var limit: Int? = null
     var groupBy: String? = null
+
+    data class Sub(val statement: Select) : Command
 }
