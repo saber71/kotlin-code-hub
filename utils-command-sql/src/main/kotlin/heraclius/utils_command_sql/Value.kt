@@ -1,0 +1,8 @@
+package heraclius.utils_command_sql
+
+import heraclius.utils_command.Command
+
+object Value {
+    data class Num(val value: Number) : Command
+    data class Str(val value: String) : Command
+}

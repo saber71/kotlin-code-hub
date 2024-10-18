@@ -9,6 +9,7 @@ object SubSelectHandler : CommandHandler<Select.Sub, String> {
         get() = Select.Sub::class.java
 
     override fun handle(command: Select.Sub): String {
-        return "(${CommandExecutor.execute<Any>(command.statement)})"
+        val alias = if (command.alias != null && command.alias!!.isNotEmpty()) " " + command.alias else ""
+        return "(${CommandExecutor.execute<Any>(command.statement)})${alias}"
     }
 }
