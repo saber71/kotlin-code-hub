@@ -8,6 +8,7 @@ object TableNameHandler : CommandHandler<Table.Name, String> {
         get() = Table.Name::class.java
 
     override fun handle(command: Table.Name): String {
-        return command.value
+        val alias = if (command.alias != null) " " + command.alias else ""
+        return command.value + alias
     }
 }

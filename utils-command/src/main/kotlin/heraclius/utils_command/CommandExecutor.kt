@@ -14,7 +14,11 @@ object CommandExecutor {
         }
     }
 
-    fun <T> execute(command: Command): T {
+    fun <T> execute(command: Command?, defaultValue: T? = null): T {
+        if (command == null) {
+            if (defaultValue == null) throw RuntimeException("Command is null")
+            return defaultValue
+        }
         val handler = commandMapHandler[command::class.java]
             ?: throw IllegalArgumentException("No handler for command ${command::class.java}")
         @Suppress("UNCHECKED_CAST")

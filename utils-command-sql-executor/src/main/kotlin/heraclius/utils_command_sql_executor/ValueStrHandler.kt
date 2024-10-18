@@ -8,6 +8,6 @@ object ValueStrHandler : CommandHandler<Value.Str, String> {
         get() = Value.Str::class.java
 
     override fun handle(command: Value.Str): String {
-        return command.value
+        return "'${command.value}'"
     }
 }
