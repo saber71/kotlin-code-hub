@@ -9,10 +9,10 @@ object SelectJoinHandler : CommandHandler<Select.Join, String> {
         get() = Select.Join::class.java
 
     override fun handle(command: Select.Join): String {
-        return "${command.type.value} ${CommandExecutor.execute<Any>(command.table)} ${
-            if (command.on != null) " " + CommandExecutor.execute(
-                command.on!!
-            ) else ""
+        return "${command.type.value} ${CommandExecutor.execute<Any>(command.table)}${
+            if (command.alias != null && command.alias!!.isNotEmpty()) " " + command.alias else ""
+        } ${
+            if (command.on != null) " " + CommandExecutor.execute(command.on!!) else ""
         }"
     }
 }

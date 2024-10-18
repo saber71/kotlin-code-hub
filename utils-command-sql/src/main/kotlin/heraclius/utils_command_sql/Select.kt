@@ -17,7 +17,12 @@ class Select(val tableName: Table.Name, val distinct: Boolean = false) : Command
 
     data class Sub(val statement: Select, val alias: String? = null) : Command
 
-    data class Join(val table: Command, val on: Logic.Interface? = null, val type: JoinType = JoinType.INNER) : Command
+    data class Join(
+        val table: Command,
+        val alias: String? = null,
+        val on: Logic.Interface? = null,
+        val type: JoinType = JoinType.INNER
+    ) : Command
 
     class OrderBy(vararg val fields: Table.Field, val asc: Boolean = true) : Command
 }
